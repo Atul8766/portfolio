@@ -60,3 +60,69 @@ body {
 .section-anchor {
   scroll-margin-top: 6rem;
 }
+
+.premium-grid {
+  position: relative;
+}
+
+.premium-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(to right, rgba(115, 161, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(115, 161, 255, 0.09) 1px, transparent 1px);
+  background-size: 34px 34px;
+  animation: grid-pan 24s linear infinite;
+}
+
+.gradient-heading {
+  background: linear-gradient(98deg, #f4fbff 0%, #9fd9ff 48%, #d5f0ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.section-shine {
+  position: relative;
+}
+
+.section-shine::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(113, 204, 255, 0.65), transparent);
+}
+
+.ticker-mask {
+  mask-image: linear-gradient(to right, transparent, black 7%, black 93%, transparent);
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 24s linear infinite;
+}
+
+@keyframes grid-pan {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-34px, -34px, 0);
+  }
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
