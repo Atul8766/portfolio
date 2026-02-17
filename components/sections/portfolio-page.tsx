@@ -236,19 +236,26 @@ export function PortfolioPage() {
 
   useEffect(() => {
     const updateActiveFromScroll = () => {
-      const offset = 140;
+      const scrollBottom = window.innerHeight + window.scrollY;
+      const pageBottom = document.documentElement.scrollHeight - 4;
+      if (scrollBottom >= pageBottom) {
+        setActiveSection(navItems[navItems.length - 1].id);
+        return;
+      }
+
+      const marker = window.innerHeight * 0.35;
       let current = navItems[0].id;
 
       for (const item of navItems) {
         const section = document.getElementById(item.id);
         if (!section) continue;
-        if (section.getBoundingClientRect().top - offset <= 0) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= marker) {
           current = item.id;
         } else {
           break;
         }
       }
-
       setActiveSection(current);
     };
 
