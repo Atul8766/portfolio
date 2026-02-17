@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import {
   Briefcase,
   Code2,
@@ -18,7 +17,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
 
 type Project = {
   title: string;
@@ -208,12 +206,27 @@ export function PortfolioPage() {
   return (
     <main className="relative z-10 pb-20">
       <header className="sticky top-0 z-30 border-b border-border/40 bg-background/70 backdrop-blur-xl">
-        <div className="container flex items-center justify-between py-4">
-          <div>
-            <p className="text-sm font-semibold tracking-wide text-primary">ATUL</p>
-            <p className="text-xs text-muted-foreground">Fullstack Developer</p>
+        <div className="container py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-semibold tracking-wide text-primary">ATUL</p>
+              <p className="text-xs text-muted-foreground">Fullstack Developer</p>
+            </div>
+            <nav className="hidden items-center gap-5 text-sm text-muted-foreground md:flex">
+              {[
+                ["About", "about"],
+                ["Skills", "skills"],
+                ["Projects", "projects"],
+                ["Experience", "experience"],
+                ["Contact", "contact"]
+              ].map(([label, href]) => (
+                <a key={href} href={`#${href}`} className="transition hover:text-foreground">
+                  {label}
+                </a>
+              ))}
+            </nav>
           </div>
-          <nav className="hidden items-center gap-5 text-sm text-muted-foreground md:flex">
+          <nav className="mt-3 flex gap-2 overflow-x-auto pb-1 md:hidden">
             {[
               ["About", "about"],
               ["Skills", "skills"],
@@ -221,7 +234,11 @@ export function PortfolioPage() {
               ["Experience", "experience"],
               ["Contact", "contact"]
             ].map(([label, href]) => (
-              <a key={href} href={`#${href}`} className="transition hover:text-foreground">
+              <a
+                key={href}
+                href={`#${href}`}
+                className="rounded-full border border-border bg-secondary/50 px-3 py-1 text-xs text-muted-foreground transition hover:text-foreground"
+              >
                 {label}
               </a>
             ))}
@@ -230,9 +247,16 @@ export function PortfolioPage() {
       </header>
 
       <section className="section-anchor container pt-14 md:pt-20" id="hero">
-        <motion.div {...fadeIn} className="grid items-center gap-10 lg:grid-cols-[1fr_380px]">
+        <motion.div {...fadeIn}>
           <div>
-            <Badge className="mb-5">Building Scalable Shopify Apps and SaaS Systems That Perform in Production</Badge>
+            <p className="mb-5 inline-flex items-center rounded-md border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium tracking-wide text-primary/90">
+              Building Scalable Shopify Apps and SaaS Systems That Perform in Production
+            </p>
+            <div className="mb-5 flex flex-wrap gap-2">
+              <Badge variant="outline">Shopify App Specialist</Badge>
+              <Badge variant="outline">SaaS System Builder</Badge>
+              <Badge variant="outline">Backend Architecture Expert</Badge>
+            </div>
             <h1 className="max-w-5xl text-3xl font-semibold leading-tight md:text-6xl">
               Fullstack Developer specializing in Shopify and Scalable Systems
             </h1>
@@ -251,18 +275,6 @@ export function PortfolioPage() {
                   Let&apos;s Collaborate
                 </Button>
               </a>
-            </div>
-          </div>
-          <div className="mx-auto w-full max-w-[340px]">
-            <div className="glass glow-border overflow-hidden rounded-3xl border p-2 shadow-glow">
-              <Image
-                src="/img-20251203-wa0001.jpg"
-                alt="Atul Shukla profile picture"
-                width={680}
-                height={850}
-                className="h-auto w-full rounded-2xl object-cover"
-                priority
-              />
             </div>
           </div>
         </motion.div>
@@ -348,7 +360,12 @@ export function PortfolioPage() {
             {projects.map((project, index) => (
               <Card key={project.title} className="relative flex h-full flex-col justify-between">
                 <CardHeader>
-                  <CardTitle className="text-lg">{project.title}</CardTitle>
+                  <div className="flex items-start justify-between gap-3">
+                    <CardTitle className="text-lg">{project.title}</CardTitle>
+                    <div className="rounded-full border border-primary/30 bg-primary/10 px-2 py-1 text-[10px] uppercase tracking-wide text-primary">
+                      Case {index + 1}
+                    </div>
+                  </div>
                   <CardDescription>{project.problem}</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -390,14 +407,6 @@ export function PortfolioPage() {
                     </DialogContent>
                   </Dialog>
                 </CardContent>
-                <div
-                  className={cn(
-                    "absolute right-4 top-4 rounded-full border border-primary/30 bg-primary/10 px-2 py-1 text-[10px] uppercase tracking-wide text-primary",
-                    "pointer-events-none"
-                  )}
-                >
-                  Case {index + 1}
-                </div>
               </Card>
             ))}
           </div>
